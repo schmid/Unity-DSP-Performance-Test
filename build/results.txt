@@ -1,0 +1,34 @@
+Name                                       
+Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz  
+
+
+bin\TestSineSpeed.exe 
+--------------------- 
+sinf test:
+  1011.12 sines/smp (144000000 iterations)
+table test (2048 samples):
+  14354.1 sines/smp (144000000 iterations)
+table test (64K samples):
+  14423.1 sines/smp (144000000 iterations)
+table test (16M samples):
+  14563.1 sines/smp (144000000 iterations)
+parabolic test:
+  7500 sines/smp (144000000 iterations)
+bin\TestSineSpeedCSharp.exe 
+--------------------------- 
+Math.Sin test:
+  387.8474 sines/smp (144000000 iterations)
+table test (2048 samples):
+  975.9271 sines/smp (144000000 iterations)
+table test (64K samples):
+  969.3053 sines/smp (144000000 iterations)
+table test (16M samples):
+  966.8063 sines/smp (144000000 iterations)
+table test [unsafe] (2048 samples):
+  966.1835 sines/smp (144000000 iterations)
+table test [unsafe] (64K samples):
+  974.9756 sines/smp (144000000 iterations)
+table test [unsafe] (16M samples):
+  961.5385 sines/smp (144000000 iterations)
+parabolic test:
+  1065.719 sines/smp (144000000 iterations)

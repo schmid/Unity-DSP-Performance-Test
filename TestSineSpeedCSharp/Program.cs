@@ -1,0 +1,166 @@
+﻿using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+
+interface ITest
+{
+    string name { get; }
+    void Init();
+    float PerformTest(long iterations);
+}
+
+class TestMathSin : ITest
+{
+    public string name { get; }
+    public TestMathSin(string name) { this.name = name; }
+    public void Init() { }
+    public float PerformTest(long iterations)
+    {
+        double sum = 0.0f;
+        double angle_per_iteration = Math.PI * 2.0 / iterations;
+        for (long i = 0; i < iterations; ++i)
+        {
+            double angle = i * angle_per_iteration;
+            sum += Math.Sin(angle); // make sure that code isn't optimized away
+        }
+        return (float)sum;
+    }
+}
+
+class TestTable : ITest
+{
+    public string name { get; }
+    private float[] sine;
+    private int tableSize;
+
+    public TestTable(string name, int tableSize)
+    {
+        this.name = name;
+        this.tableSize = tableSize;
+    }
+    public void Init()
+    {
+        sine = new float[tableSize];
+        float anglePerIteration = (float)(Math.PI * 2.0 / tableSize);
+        for (int i = 0; i < tableSize; ++i)
+        {
+            sine[i] = (float)Math.Sin(i * anglePerIteration);
+        }
+    }
+    public float PerformTest(long iterations)
+    {
+        float sum = 0.0f;
+        float periods_per_iteration = 0.9999f / iterations;
+        for (long i = 0; i < iterations; ++i)
+        {
+            float periods = i * periods_per_iteration;
+            int idx = (int)(periods * tableSize);
+            sum += sine[idx];
+        }
+        return sum;
+    }
+}
+
+class TestTable_unsafe : ITest
+{
+    public string name { get; }
+    private float[] sine;
+    private int tableSize;
+
+    public TestTable_unsafe(string name, int tableSize)
+    {
+        this.name = name;
+        this.tableSize = tableSize;
+    }
+    public void Init()
+    {
+        sine = new float[tableSize];
+        float anglePerIteration = (float)(Math.PI * 2.0 / tableSize);
+        for (int i = 0; i < tableSize; ++i)
+        {
+            sine[i] = (float)Math.Sin(i * anglePerIteration);
+        }
+    }
+    public float PerformTest(long iterations)
+    {
+        float sum = 0.0f;
+        unsafe
+        {
+            float periods_per_iteration = 0.9999f / iterations;
+            fixed (float* ptr = sine)
+            {
+                for (long i = 0; i < iterations; ++i)
+                {
+                    float periods = i * periods_per_iteration;
+                    int idx = (int)(periods * tableSize);
+                    //sum += ptr[idx];
+                    sum += *(ptr +idx);
+                }
+            }
+        }
+        return sum;
+    }
+}
+
+class TestParabolic : ITest
+{
+    public string name { get; }
+    public TestParabolic(string name) { this.name = name; }
+    public void Init() { }
+    public float PerformTest(long iterations)
+    {
+        float sum = 0.0f;
+        float periods_per_iteration = 1.0f / iterations;
+        const float PI2 = (float)(Math.PI * 2.0);
+        const float F = (float)(-8.0 * Math.PI);
+        for (long i = 0; i < iterations; ++i)
+        {
+            float p = i * periods_per_iteration;
+            float sine = 8 * p + F * p * Math.Abs(p * PI2);
+            sum += sine;
+        }
+        return sum;
+    }
+}
+
+class Program
+{
+    const long ITERATIONS = 48000L * 3000L;
+    private Stopwatch stopWatch = new Stopwatch();
+
+    static void Main(string[] args)
+    {
+        new Program().RunTests();
+    }
+
+    public void Run(ITest test, long iterations)
+    {
+        test.Init();
+        Console.WriteLine("{0}:", test.name);
+        stopWatch.Restart();
+        float results = test.PerformTest(iterations);
+        long time_ms = stopWatch.ElapsedMilliseconds;
+        float time_s = time_ms * 0.001f;
+        Console.WriteLine(
+            "  {0} sines/smp ({1} iterations)", (ITERATIONS / 48000) / time_s, ITERATIONS);
+    }
+
+    public void RunTests()
+    {
+        List<ITest> tests = new List<ITest> {
+            new TestMathSin("Math.Sin test"),
+            new TestTable("table test (2048 samples)", 2048),
+            new TestTable("table test (64K samples)", 1 << 16),
+            new TestTable("table test (16M samples)", 1 << 24),
+            new TestTable_unsafe("table test [unsafe] (2048 samples)", 2048),
+            new TestTable_unsafe("table test [unsafe] (64K samples)", 1 << 16),
+            new TestTable_unsafe("table test [unsafe] (16M samples)", 1 << 24),
+            new TestParabolic("parabolic test"),
+        };
+
+        foreach (var test in tests)
+        {
+            Run(test, ITERATIONS);
+        }
+    }
+}
