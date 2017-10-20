@@ -24,8 +24,10 @@ Library Sine Test
 	}
 
 Results (144000000 iterations):
-- C++ : 1011 iterations/smp (1 smp = 1/48000 s)
-- C#  :  388 iterations/smp 
+- C++                : 1011 iterations/smp (1 smp = 1/48000 s)
+- C#                 :  475 iterations/smp 
+- C# (Prefer 32-bit) :  388 iterations/smp 
+
 
 C++ is 2.6 times faster
 
@@ -44,8 +46,9 @@ Polynomial Approximation Test
 	}
 
 Results (144000000 iterations):
-- C++ : 7500 iterations/smp 
-- C#  : 1066 iterations/smp
+- C++                :  7500 iterations/smp 
+- C#                 : 11905 iterations/smp
+- C# (Prefer 32-bit) :  1066 iterations/smp
 
 C++ is 7 times faster
 
@@ -64,11 +67,13 @@ Array Test
 	}
 
 Results (144000000 iterations, TABLE_SIZE=2048)
-- C++ : 14354 iterations/smp
-- C#  :   976 iterations/smp
+- C++                : 14354 iterations/smp
+- C#                 : 14851 iterations/smp
+- C# (Prefer 32-bit) :   976 iterations/smp
 Results (144000000 iterations, TABLE_SIZE=16M)
-- C++ : 14563 iterations/smp
-- C#  :   967 iterations/smp
+- C++                : 14563 iterations/smp
+- C#                 : 14493 iterations/smp
+- C# (Prefer 32-bit) :   967 iterations/smp
 
 C++ is 15 times faster!
 
