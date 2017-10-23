@@ -1,16 +1,24 @@
+TODO
+====
+[ ] C# on 32-bit hardware (JMS probably has a 32-bit machine?)
+
 Setup
 =====
 - I have set up tests for different approaches to sine computation.
 - The same algorithms are being tested with C# and C++ implementations.
 - Tests run 144000000 iterations and are timed with StopWatch (C#) or chrono::high_resolution_clock (C++).
 - C++ code is compiled with VS2017 in x86 Release mode with optimization enabled
-- C# code is compiled with VS2017 in Release mode with optimization enabled
+- .NET C# code is compiled with VS2017 in Release mode with optimization enabled
+- Unity (Mono) C# code is compiled with Unity 2017.2.0f3 (64-bit)
 
 
 
 Test Results
 ============
 - All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
+- General results for these tests:
+  - .NET C# with 'Prefer 32-bit' disabled is as fast as over even faster than C++
+  - Unity (Mono) C# and .NET C# with 'Prefer 32-bit' enabled is 2-15 times slower than C++
 
 Library Sine Test
 -----------------
@@ -24,12 +32,13 @@ Library Sine Test
 	}
 
 Results (144000000 iterations):
-- C++                : 1011 iterations/smp (1 smp = 1/48000 s)
-- C#                 :  475 iterations/smp 
-- C# (Prefer 32-bit) :  388 iterations/smp 
+- C++                     : 1011 iterations/smp ! (1 smp = 1/48000 s)
+- C# (UnityStandalone)    :  432 iterations/smp 
+- C# (UnityEditor)        :  425 iterations/smp 
+- C# (.NET)               :  475 iterations/smp 
+- C# (.NET Prefer 32-bit) :  388 iterations/smp 
 
-
-C++ is 2.6 times faster
+C++ is 2.1 times faster than .NET C#
 
 
 Polynomial Approximation Test
@@ -46,11 +55,13 @@ Polynomial Approximation Test
 	}
 
 Results (144000000 iterations):
-- C++                :  7500 iterations/smp 
-- C#                 : 11905 iterations/smp
-- C# (Prefer 32-bit) :  1066 iterations/smp
+- C++                     :  7500 iterations/smp 
+- C# (UnityStandalone)    :   714 iterations/smp
+- C# (UnityEditor)        :   689 iterations/smp
+- C# (.NET)               : 11905 iterations/smp !
+- C# (.NET Prefer 32-bit) :  1066 iterations/smp
 
-C++ is 7 times faster
+.NET C# is 1.6 times faster than C++
 
 
 Array Test
@@ -67,15 +78,19 @@ Array Test
 	}
 
 Results (144000000 iterations, TABLE_SIZE=2048)
-- C++                : 14354 iterations/smp
-- C#                 : 14851 iterations/smp
-- C# (Prefer 32-bit) :   976 iterations/smp
+- C++                     : 14354 iterations/smp
+- C# (UnityStandalone)    :  1661 iterations/smp
+- C# (UnityEditor)        :  1435 iterations/smp
+- C# (.NET)               : 14851 iterations/smp !
+- C# (Prefer 32-bit)      :   976 iterations/smp
 Results (144000000 iterations, TABLE_SIZE=16M)
-- C++                : 14563 iterations/smp
-- C#                 : 14493 iterations/smp
-- C# (Prefer 32-bit) :   967 iterations/smp
+- C++                     : 14563 iterations/smp !
+- C# (UnityStandalone)    :  1692 iterations/smp
+- C# (UnityEditor)        :  1458 iterations/smp
+- C# (.NET)               : 14493 iterations/smp
+- C# (.NET Prefer 32-bit) :   967 iterations/smp
 
-C++ is 15 times faster!
+.NET C# and C++ are equally fast
 
 
 
