@@ -156,12 +156,12 @@ void run(Test &test, long iterations)
 
 int main()
 {
-	Test_sinf test_sinf("sinf test");
-	Test_table test_table_2048("table test (2048 samples)", 2048);
-	Test_table test_table_64K("table test (64K samples)", 1 << 16);
-	Test_table test_table_16M("table test (16M samples)", 1 << 24);
-	Test_parabolic test_parabolic("parabolic test");
-	vector<Test *> tests{ &test_sinf, &test_table_2048, &test_table_64K, &test_table_16M, &test_parabolic };
+	Test_sinf test_sinf("Library Sine Test");
+	Test_parabolic test_parabolic("Polynomial Approximation Test");
+	Test_table test_table_2048("Array Test (2048 samples)", 2048);
+	//Test_table test_table_64K("table test (64K samples)", 1 << 16);
+	Test_table test_table_16M("Array Test (16M samples)", 1 << 24);
+	vector<Test *> tests{ &test_sinf, &test_parabolic, &test_table_2048, /*&test_table_64K,*/ &test_table_16M };
 
 	for(Test *test : tests)
 	{

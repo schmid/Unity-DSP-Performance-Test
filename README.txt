@@ -32,10 +32,11 @@ Library Sine Test
 	}
 
 Results (144000000 iterations):
-- C++                     : 1011 iterations/smp ! (1 smp = 1/48000 s)
+- C++ (x86)               : 1011 iterations/smp (1 smp = 1/48000 s)
+- C++ (x64)               : 5747 iterations/smp !
 - C# (UnityStandalone)    :  432 iterations/smp 
 - C# (UnityEditor)        :  425 iterations/smp 
-- C# (.NET)               :  475 iterations/smp 
+- C# (.NET)               :  501 iterations/smp 
 - C# (.NET Prefer 32-bit) :  388 iterations/smp 
 
 C++ is 2.1 times faster than .NET C#
@@ -55,7 +56,8 @@ Polynomial Approximation Test
 	}
 
 Results (144000000 iterations):
-- C++                     :  7500 iterations/smp 
+- C++ (x86)               :  8264 iterations/smp 
+- C++ (x64)               :  8955 iterations/smp 
 - C# (UnityStandalone)    :   714 iterations/smp
 - C# (UnityEditor)        :   689 iterations/smp
 - C# (.NET)               : 11905 iterations/smp !
@@ -78,16 +80,18 @@ Array Test
 	}
 
 Results (144000000 iterations, TABLE_SIZE=2048)
-- C++                     : 14354 iterations/smp
+- C++ (x86)               : 16042 iterations/smp
+- C++ (x64)               : 16216 iterations/smp !
 - C# (UnityStandalone)    :  1661 iterations/smp
 - C# (UnityEditor)        :  1435 iterations/smp
-- C# (.NET)               : 14851 iterations/smp !
+- C# (.NET)               : 15544 iterations/smp
 - C# (Prefer 32-bit)      :   976 iterations/smp
 Results (144000000 iterations, TABLE_SIZE=16M)
-- C++                     : 14563 iterations/smp !
+- C++ (x86)               : 15873 iterations/smp !
+- C++ (x64)               : 15789 iterations/smp
 - C# (UnityStandalone)    :  1692 iterations/smp
 - C# (UnityEditor)        :  1458 iterations/smp
-- C# (.NET)               : 14493 iterations/smp
+- C# (.NET)               : 15544 iterations/smp
 - C# (.NET Prefer 32-bit) :   967 iterations/smp
 
 .NET C# and C++ are equally fast

@@ -140,27 +140,29 @@ public class Program
         test.Init();
         output += string.Format("{0}:", test.name);
         stopWatch.Reset();
+
         stopWatch.Start();
-        //stopWatch.Restart();
         float results = test.PerformTest(iterations);
+        stopWatch.Stop();
+
         long time_ms = stopWatch.ElapsedMilliseconds;
         float time_s = time_ms * 0.001f;
         // Output sum just make absolutely sure it's not optimized away
-        output += string.Format("  {0} sines/smp ({1} iterations) (sum = {2})\n", (iterations / 48000) / time_s, iterations, results);
+        output += string.Format("  {0} sines/smp ({1} iterations) (sum = {2}, stopWatch time = {3} ms)\n", (iterations / 48000) / time_s, iterations, results, time_ms);
         return output;
     }
 
     private List<ITest> GetTests()
     {
         return new List<ITest> {
-            new TestMathSin("Math.Sin test"),
-            new TestTable("table test (2048 samples)", 2048),
-            new TestTable("table test (64K samples)", 1 << 16),
-            new TestTable("table test (16M samples)", 1 << 24),
-            new TestTable_unsafe("table test [unsafe] (2048 samples)", 2048),
-            new TestTable_unsafe("table test [unsafe] (64K samples)", 1 << 16),
-            new TestTable_unsafe("table test [unsafe] (16M samples)", 1 << 24),
-            new TestParabolic("parabolic test"),
+            new TestMathSin("Library Sine Test"),
+            new TestParabolic("Polynomial Approximation Test"),
+            new TestTable("Array Test (2048 samples)", 2048),
+            //new TestTable("Array Test (64K samples)", 1 << 16),
+            new TestTable("Array Test (16M samples)", 1 << 24),
+            new TestTable_unsafe("Array Test [unsafe] (2048 samples)", 2048),
+            //new TestTable_unsafe("Array Test [unsafe] (64K samples)", 1 << 16),
+            new TestTable_unsafe("Array Test [unsafe] (16M samples)", 1 << 24),
         };
     }
 
