@@ -16,9 +16,6 @@ Setup
 Test Results
 ============
 - All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
-- General results for these tests:
-  - .NET C# with 'Prefer 32-bit' disabled is as fast as over even faster than C++
-  - Unity (Mono) C# and .NET C# with 'Prefer 32-bit' enabled is 2-15 times slower than C++
 
 Library Sine Test
 -----------------
