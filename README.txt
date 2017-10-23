@@ -7,7 +7,7 @@ Setup
 - I have set up tests for different approaches to sine computation.
 - The same algorithms are being tested with C# and C++ implementations.
 - Tests run 144000000 iterations and are timed with StopWatch (C#) or chrono::high_resolution_clock (C++).
-- C++ code is compiled with VS2017 in x86 Release mode with optimization enabled
+- C++ code is compiled with VS2017 in Release mode with optimization enabled
 - .NET C# code is compiled with VS2017 in Release mode with optimization enabled
 - Unity (Mono) C# code is compiled with Unity 2017.2.0f3 (64-bit)
 
