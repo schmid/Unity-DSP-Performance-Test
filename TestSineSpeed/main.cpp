@@ -151,7 +151,7 @@ void run(Test &test, long iterations)
 	auto time_ms = std::chrono::duration_cast<milli>(finish - start).count();
 	float time_s = time_ms * 0.001f;
 	cout << "  " << (iterations/48000) / time_s << " sines/smp ("
-		<< iterations << " iterations)" << std::endl;
+		 << iterations << " iterations) (sum = " << result << ")" << std::endl;
 }
 
 int main()

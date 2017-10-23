@@ -145,7 +145,8 @@ public class Program
         float results = test.PerformTest(iterations);
         long time_ms = stopWatch.ElapsedMilliseconds;
         float time_s = time_ms * 0.001f;
-        output += string.Format("  {0} sines/smp ({1} iterations)\n", (iterations / 48000) / time_s, iterations);
+        // Output sum just make absolutely sure it's not optimized away
+        output += string.Format("  {0} sines/smp ({1} iterations) (sum = {2})\n", (iterations / 48000) / time_s, iterations, results);
         return output;
     }
 
