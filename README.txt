@@ -16,7 +16,7 @@ Overview of Results
 - The fastest approach to sine computation was a look-up table (LUT)
   - tables with 2K to 16M floats performed equally well.
 - C++ (x64) performs rougly on par with C# (.NET)
-- C# (.NET) outperforms C# (Unity) by a factor of 0.2-17, depending on the test type
+- C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type
 - If 'Prefer 32-bit' is enabled in VS2017, C# performs *very poorly*, up to 16x slower
 
 
