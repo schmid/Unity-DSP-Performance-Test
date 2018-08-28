@@ -5,25 +5,32 @@ Setup
 - Tests run 144000000 iterations and are timed with StopWatch (C#) or chrono::high_resolution_clock (C++).
 - C++ code is compiled with VS2017 in Release mode with optimization enabled
 - .NET C# code is compiled with VS2017 in Release mode with optimization enabled
-- Unity (Mono) C# code is compiled with Unity 2017.2.0f3 (64-bit)
-- UnityStandalone3.5 means that Scripting Runtime Version is set to '.NET 3.5 equivalent' 
-- UnityStandalone4.6 means that Scripting Runtime Version is set to '.NET 4.6 equivalent' 
+
+- 'Unity2017' means compiled with Unity 2017.2.0f3 (64-bit)
+  - Unity2017-Editor is running in editor (Mono)
+  - Unity2017-3.5 is Unity standalone with Scripting Runtime Version is set to '.NET 3.5 equivalent' (Mono)
+  - Unity2017-4.6 is Unity standalone with Scripting Runtime Version is set to '.NET 4.6 equivalent' (Mono)
+
+- 'Unity2018-IL2CPP-4.x' means Unity2018.2.5f1 standalone, Backend: IL2CPP, .NET 4.x Equivalent, .NET 4.x, Compiled in Visual Studio 2017 (release)
+
 
 
 Overview of Results
 ===================
+- All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
 
 - The fastest approach to sine computation was a look-up table (LUT)
   - tables with 2K to 16M floats performed equally well.
-- C++ (x64) performs rougly on par with C# (.NET)
-- C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type
+- C++ (x64) performs rougly on par with C# (.NET) and IL2CPP ('Release' build, 'Master' did not have any significant increase in performance)
+- C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type, however, according to official Unity forum posts, .NET is deprecated in favour of Mono and IL2CPP.
 - If 'Prefer 32-bit' is enabled in VS2017, C# performs *very poorly*, up to 16x slower
+
+- See https://forum.unity.com/threads/deprecation-of-support-for-the-net-scripting-backend-used-by-the-universal-windows-platform.539685/
 
 
 
 Test Results
 ============
-- All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
 
 
 Library Sine Test
@@ -40,13 +47,15 @@ Code::
     }
 
 Results (144000000 iterations):
-- C++ (x86)               : 1011 iterations/smp (1 smp = 1/48000 s)
-- C++ (x64)               : 5747 iterations/smp !
-- C# (UnityStandalone3.5) :  442 iterations/smp 
-- C# (UnityStandalone4.6) :  443 iterations/smp 
-- C# (UnityEditor)        :  425 iterations/smp 
-- C# (.NET)               :  501 iterations/smp 
-- C# (.NET Prefer 32-bit) :  388 iterations/smp 
+- C++ (x86)                 :  48528 K iter/s
+- C++ (x64)                 : 275856 K iter/s !
+- C# (Unity2017-3.5)        :  21216 K iter/s 
+- C# (Unity2017-4.6)        :  21264 K iter/s 
+- C# (Unity2017-Editor)     :  20400 K iter/s 
+- C# (.NET)                 :  24048 K iter/s 
+- C# (.NET Prefer 32-bit)   :  18624 K iter/s 
+- C# (Unity2018-IL2CPP-4.x) : 102345 K iter/s
+
 
 
 Polynomial Approximation Test
@@ -65,13 +74,15 @@ Code::
     }
 
 Results (144000000 iterations):
-- C++ (x86)               :  8264 iterations/smp 
-- C++ (x64)               :  8955 iterations/smp 
-- C# (UnityStandalone3.5) :   717 iterations/smp 
-- C# (UnityStandalone4.6) :   540 iterations/smp 
-- C# (UnityEditor)        :   689 iterations/smp
-- C# (.NET)               : 11905 iterations/smp !
-- C# (.NET Prefer 32-bit) :  1066 iterations/smp
+- C++ (x86)                 : 396672 K iter/s 
+- C++ (x64)                 : 429840 K iter/s 
+- C# (Unity2017-3.5)        :  34416 K iter/s 
+- C# (Unity2017-4.6)        :  25920 K iter/s 
+- C# (Unity2017-Editor)     :  33072 K iter/s
+- C# (.NET)                 : 571440 K iter/s !
+- C# (.NET Prefer 32-bit)   :  51168 K iter/s
+- C# (Unity2018-IL2CPP-4.x) : 401114 K iter/s
+
 
 
 Array Test
@@ -91,21 +102,24 @@ Code::
     }
 
 Results (144000000 iterations, TABLE_SIZE=2048)
-- C++ (x86)               : 16042 iterations/smp
-- C++ (x64)               : 16216 iterations/smp !
-- C# (UnityStandalone3.5) :  1588 iterations/smp 
-- C# (UnityStandalone4.6) :  1614 iterations/smp 
-- C# (UnityEditor)        :  1435 iterations/smp
-- C# (.NET)               : 15544 iterations/smp
-- C# (Prefer 32-bit)      :   976 iterations/smp
+- C++ (x86)                 : 770016 K iter/s
+- C++ (x64)                 : 778368 K iter/s !
+- C# (Unity2017-3.5)        :  76224 K iter/s 
+- C# (Unity2017-4.6)        :  77472 K iter/s 
+- C# (Unity2017-Editor)     :  68880 K iter/s
+- C# (.NET)                 : 746112 K iter/s
+- C# (Prefer 32-bit)        :  46848 K iter/s
+- C# (Unity2018-IL2CPP-4.x) : 651584 K iter/s
+
 Results (144000000 iterations, TABLE_SIZE=16M)
-- C++ (x86)               : 15873 iterations/smp !
-- C++ (x64)               : 15789 iterations/smp
-- C# (UnityStandalone3.5) :  1682 iterations/smp 
-- C# (UnityStandalone4.6) :  1614 iterations/smp 
-- C# (UnityEditor)        :  1458 iterations/smp
-- C# (.NET)               : 15544 iterations/smp
-- C# (.NET Prefer 32-bit) :   967 iterations/smp
+- C++ (x86)                 : 761904 K iter/s !
+- C++ (x64)                 : 757872 K iter/s
+- C# (Unity2017-3.5)        :  80736 K iter/s 
+- C# (Unity2017-4.6)        :  77472 K iter/s 
+- C# (Unity2017-Editor)     :  69984 K iter/s
+- C# (.NET)                 : 746112 K iter/s
+- C# (.NET Prefer 32-bit)   :  46416 K iter/s
+- C# (Unity2018-IL2CPP-4.x) : 645740 K iter/s
 
 
 C++ Notes
