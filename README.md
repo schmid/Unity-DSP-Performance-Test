@@ -1,10 +1,20 @@
-Goal
-====
+Goal and Key Results
+====================
 This documents a series of tests for different approaches to sine computation, the goal being to test the relative performance of different approaches to DSP code for use in Unity. This would be relevant for writing realtime software synthesizers and effects for Unity games. The example used is a simple algorithm that computes a sum of sines using different approaches: library functions, polynomial approximation, and lookup tables of different sizes.
 
-The key result shows that **using C# in Unity with the IL2CPP scripting backend performs roughly on par with C++**.
+The key result shows that:
+
+**C# in Unity with the IL2CPP scripting backend performs roughly on par with C++**,
+
+which indicates that it could be viable for implementing DSP code.
+
+The following graph shows the performance of 4 different implementations (lookup tables are the fastest) implemented using C++ and C# with different scripting backends.
 
 ![results chart](https://raw.githubusercontent.com/schmid/test_sine/master/sine_perf.png)
+
+In Unity PlayerSettings, the IL2CPP scripting backend is enabled here:
+
+![Unity PlayerSettings](https://raw.githubusercontent.com/schmid/test_sine/master/PlayerSettings.png)
 
 Setup
 =====
