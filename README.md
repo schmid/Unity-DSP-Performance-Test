@@ -2,9 +2,9 @@ Goal and Key Results
 ====================
 This documents a series of tests for different approaches to sine computation, the goal being to test the relative performance of different approaches to DSP code for use in Unity. This would be relevant for writing realtime software synthesizers and effects for Unity games. The example used is a simple algorithm that computes a sum of sines using different approaches: library functions, polynomial approximation, and lookup tables of different sizes.
 
-The key result shows that:
+The key result:
 
-**C# in Unity with the IL2CPP scripting backend performs roughly on par with C++**,
+**C# in Unity with the IL2CPP scripting backend performs comparably to C++**,
 
 which indicates that it could be viable for implementing DSP code.
 
@@ -33,8 +33,8 @@ Setup
 
 Overview of Results
 ===================
-- C++ (x64), C# (.NET), and C# compiled with Unity's IL2CPP perform comparably, other Unity C# scripting backends and .NET with 'Prefer 32-bit' enabled perform much worse, in certain tests by an order of magnitude.
-- The fastest tested approach to sine computation was a look-up table (LUT). Tables with 2K to 16M floats performed equally well.
+- C++ (x64), C# (.NET), and C# compiled with Unity's IL2CPP perform comparably, other Unity C# scripting backends and .NET with 'Prefer 32-bit' enabled perform much worse, in most tests by an order of magnitude.
+- The fastest tested approach to sine computation was a look-up table (LUT). Tables with 2K to 16M floats performed equally well. This was a surprise to me, since the i7-6800HQ only has 6 MB of cache.
 - C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type, however, [according to official Unity forum posts, .NET is deprecated in favour of Mono and IL2CPP](https://forum.unity.com/threads/deprecation-of-support-for-the-net-scripting-backend-used-by-the-universal-windows-platform.539685/).
 - If 'Prefer 32-bit' is enabled in VS2017, C# performs *very poorly*, up to 16x slower.
 
