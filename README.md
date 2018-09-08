@@ -17,6 +17,7 @@ Setup
 
 Overview of Results
 ===================
+![results chart](https://raw.githubusercontent.com/schmid/test_sine/master/sine_perf.png)
 - All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
 - The fastest approach to sine computation was a look-up table (LUT).
   - tables with 2K to 16M floats performed equally well.
