@@ -18,15 +18,11 @@ Setup
 Overview of Results
 ===================
 - All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
-
 - The fastest approach to sine computation was a look-up table (LUT)
   - tables with 2K to 16M floats performed equally well.
-- C++ (x64) performs rougly on par with C# (.NET) and IL2CPP ('Release' build, 'Master' did not have any significant increase in performance)
-- C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type, however, according to official Unity forum posts, .NET is deprecated in favour of Mono and IL2CPP.
+- C++ (x64) performs rougly on par with C# (.NET) and Unity's IL2CPP, resulting files compiled with VS2017 ('Release' build, 'Master' did not have any significant increase in performance)
+- C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type, however, [according to official Unity forum posts, .NET is deprecated in favour of Mono and IL2CPP](https://forum.unity.com/threads/deprecation-of-support-for-the-net-scripting-backend-used-by-the-universal-windows-platform.539685/).
 - If 'Prefer 32-bit' is enabled in VS2017, C# performs *very poorly*, up to 16x slower
-
-- See https://forum.unity.com/threads/deprecation-of-support-for-the-net-scripting-backend-used-by-the-universal-windows-platform.539685/
-
 
 
 Test Results
