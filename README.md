@@ -47,6 +47,7 @@ Code::
     }
 
 Results (144000000 iterations):
+```
 - C++ (x86)                 :  48528 K iter/s
 - C++ (x64)                 : 275856 K iter/s !
 - C# (Unity2017-3.5)        :  21216 K iter/s 
@@ -55,7 +56,7 @@ Results (144000000 iterations):
 - C# (.NET)                 :  24048 K iter/s 
 - C# (.NET Prefer 32-bit)   :  18624 K iter/s 
 - C# (Unity2018-IL2CPP-4.x) : 102345 K iter/s
-
+```
 
 
 Polynomial Approximation Test
@@ -74,6 +75,7 @@ Code::
     }
 
 Results (144000000 iterations):
+```
 - C++ (x86)                 : 396672 K iter/s 
 - C++ (x64)                 : 429840 K iter/s 
 - C# (Unity2017-3.5)        :  34416 K iter/s 
@@ -82,7 +84,7 @@ Results (144000000 iterations):
 - C# (.NET)                 : 571440 K iter/s !
 - C# (.NET Prefer 32-bit)   :  51168 K iter/s
 - C# (Unity2018-IL2CPP-4.x) : 401114 K iter/s
-
+```
 
 
 Array Test
@@ -102,6 +104,7 @@ Code::
     }
 
 Results (144000000 iterations, TABLE_SIZE=2048)
+```
 - C++ (x86)                 : 770016 K iter/s
 - C++ (x64)                 : 778368 K iter/s !
 - C# (Unity2017-3.5)        :  76224 K iter/s 
@@ -110,8 +113,10 @@ Results (144000000 iterations, TABLE_SIZE=2048)
 - C# (.NET)                 : 746112 K iter/s
 - C# (Prefer 32-bit)        :  46848 K iter/s
 - C# (Unity2018-IL2CPP-4.x) : 651584 K iter/s
+```
 
 Results (144000000 iterations, TABLE_SIZE=16M)
+```
 - C++ (x86)                 : 761904 K iter/s !
 - C++ (x64)                 : 757872 K iter/s
 - C# (Unity2017-3.5)        :  80736 K iter/s 
@@ -120,12 +125,12 @@ Results (144000000 iterations, TABLE_SIZE=16M)
 - C# (.NET)                 : 746112 K iter/s
 - C# (.NET Prefer 32-bit)   :  46416 K iter/s
 - C# (Unity2018-IL2CPP-4.x) : 645740 K iter/s
-
+``
 
 C++ Notes
 =========
 - For the Array Test at least, the C++ binary is SSE optimized:
-
+```
             // Array Test inner loop:
 
             float periods = i * periods_per_iteration;
@@ -147,4 +152,4 @@ C++ Notes
     00007FF62B02C901  movss       xmm0,dword ptr [sum]  
     00007FF62B02C906  addss       xmm0,dword ptr [rcx+rax*4]  
     00007FF62B02C90B  movss       dword ptr [sum],xmm0   
-
+```
