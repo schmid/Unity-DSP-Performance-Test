@@ -36,7 +36,7 @@ Test Results
 Library Sine Test
 -----------------
 
-Code::
+Code:
 
     float sum = 0.0f;
     float angle_per_iteration = PI2 / iterations;
@@ -62,7 +62,7 @@ Results (144000000 iterations):
 Polynomial Approximation Test
 -----------------------------
 
-Code::
+Code:
 
     float sum = 0.0f;
     const float periods_per_iteration = 1.0f / iterations;
@@ -125,7 +125,7 @@ Results (144000000 iterations, TABLE_SIZE=16M)
 - C# (.NET)                 : 746112 K iter/s
 - C# (.NET Prefer 32-bit)   :  46416 K iter/s
 - C# (Unity2018-IL2CPP-4.x) : 645740 K iter/s
-``
+```
 
 C++ Notes
 =========
