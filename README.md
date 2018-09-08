@@ -10,11 +10,11 @@ which indicates that it could be viable for implementing DSP code.
 
 The following graph shows the performance of 4 different implementations (lookup tables are the fastest) implemented using C++ and C# with different scripting backends.
 
-![results chart](https://raw.githubusercontent.com/schmid/test_sine/master/sine_perf.png)
+![results chart](https://raw.githubusercontent.com/schmid/Unity-DSP-Performance-Test/master/sine_perf.png)
 
 In Unity PlayerSettings, the IL2CPP scripting backend is enabled here:
 
-![Unity PlayerSettings](https://raw.githubusercontent.com/schmid/test_sine/master/PlayerSettings.png)
+![Unity PlayerSettings](https://raw.githubusercontent.com/schmid/Unity-DSP-Performance-Test/master/PlayerSettings.png)
 
 Setup
 =====
