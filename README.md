@@ -1,27 +1,30 @@
+Goal
+====
+This documents a series of tests for different approaches to sine computation, the goal being to test the relative performance of different approaches to DSP code for use in Unity. This would be relevant for writing realtime software synthesizers and effects for Unity games. The example used is a simple algorithm that computes a sum of sines using different approaches: library functions, polynomial approximation, and lookup tables of different sizes.
+
+The key result shows that **using C# in Unity with the IL2CPP scripting backend performs roughly on par with C++**.
+
+![results chart](https://raw.githubusercontent.com/schmid/test_sine/master/sine_perf.png)
+
 Setup
 =====
-- I have set up tests for different approaches to sine computation.
 - The same algorithms are being tested with C# and C++ implementations.
-- Tests run 144000000 iterations and are timed with StopWatch (C#) or chrono::high_resolution_clock (C++).
+- Tests run 144000000 iterations and are timed with `StopWatch` (C#) or `chrono::high_resolution_clock` (C++).
 - C++ code is compiled with VS2017 in Release mode with optimization enabled
 - .NET C# code is compiled with VS2017 in Release mode with optimization enabled
-
 - 'Unity2017' means compiled with Unity 2017.2.0f3 (64-bit)
   - Unity2017-Editor is running in editor (Mono)
   - Unity2017-3.5 is Unity standalone with Scripting Runtime Version is set to '.NET 3.5 equivalent' (Mono)
   - Unity2017-4.6 is Unity standalone with Scripting Runtime Version is set to '.NET 4.6 equivalent' (Mono)
-
-- 'Unity2018-IL2CPP-4.x' means Unity2018.2.5f1 standalone, Backend: IL2CPP, .NET 4.x Equivalent, .NET 4.x, Compiled in Visual Studio 2017 (release)
+- 'Unity2018-IL2CPP-4.x' means Unity2018.2.5f1 standalone, Backend: IL2CPP, .NET 4.x Equivalent, .NET 4.x, Compiled in Visual Studio 2017, 'Release' build, - 'Master' did not have any significant increase in performance.
+- All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
 
 
 
 Overview of Results
 ===================
-![results chart](https://raw.githubusercontent.com/schmid/test_sine/master/sine_perf.png)
-- All tests were run on an Intel Core i7-6700HQ 2.60 GHz.
-- The fastest approach to sine computation was a look-up table (LUT).
-  - tables with 2K to 16M floats performed equally well.
-- C++ (x64) performs rougly on par with C# (.NET) and Unity's IL2CPP (resulting files compiled with VS2017, 'Release' build, 'Master' did not have any significant increase in performance).
+- C++ (x64), C# (.NET), and C# compiled with Unity's IL2CPP perform comparably, other Unity C# scripting backends and .NET with 'Prefer 32-bit' enabled perform much worse, in certain tests by an order of magnitude.
+- The fastest tested approach to sine computation was a look-up table (LUT). Tables with 2K to 16M floats performed equally well.
 - C# (.NET) outperforms C# (Unity) by a factor of 1.2-17, depending on the test type, however, [according to official Unity forum posts, .NET is deprecated in favour of Mono and IL2CPP](https://forum.unity.com/threads/deprecation-of-support-for-the-net-scripting-backend-used-by-the-universal-windows-platform.539685/).
 - If 'Prefer 32-bit' is enabled in VS2017, C# performs *very poorly*, up to 16x slower.
 
@@ -100,7 +103,7 @@ Code::
         sum += sine[idx];
     }
 
-Results (144000000 iterations, TABLE_SIZE=2048)
+Results (144000000 iterations, `TABLE_SIZE`=2048)
 ```
 - C++ (x86)                 : 770016 K iter/s
 - C++ (x64)                 : 778368 K iter/s !
@@ -112,7 +115,7 @@ Results (144000000 iterations, TABLE_SIZE=2048)
 - C# (Unity2018-IL2CPP-4.x) : 651584 K iter/s
 ```
 
-Results (144000000 iterations, TABLE_SIZE=16M)
+Results (144000000 iterations, `TABLE_SIZE`=16M)
 ```
 - C++ (x86)                 : 761904 K iter/s !
 - C++ (x64)                 : 757872 K iter/s
